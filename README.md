@@ -3,18 +3,28 @@
 # Make a zoommable pannable heatmap of your location history
 
 ## Step 1: Get your data
+Go to your settings and you're going to be downloading your location history locally, on to your phone as "Timeline.json"
+
+Then you will transfer it to your computer.
+
 https://github.com/user-attachments/assets/35fe220b-381b-4499-b7d9-01699557749b
 
 ## Step 2: Get it over to a computer
 Email it, adb, bluetooth, there's plenty of ways.
 
 ## Step 3: Tweak the heatmap_generator.py to your likings
+There's 2 constants at the top of the file
+
+```python
+SIZE = 50000
+DISTANCE = 15 
+```
+- The size is in pixels, it will generate a square image, so in this instance 50,000x50,000
 - The distance is in lat/lng from the initial location
-- The size is in pixels, it will generate a square image.
 
 ## Step 4: Run the script with your Timeline.json there
-This will take a while and you might need a lot of memory.
-When you are done you should have a `heatmap.png`
+This will take a while and you might need a lot of memory (tens of GB depending on the size)
+When you are done you should have a `heatmap.png`.
 
 ## Step 5: Install vips, imagemagick && run the tile maker
 This is what will break things up into tiles
