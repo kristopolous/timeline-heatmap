@@ -4,7 +4,7 @@
 
 This tool turns your Google Location History into an interactive heatmap you can explore in the browser.
 
-It's really great as a memory tool. That one time you went to the mountains or your trip out to the desert. You can see bright dots where your jobs were or that old friend lived that you've forgotten to reach out to. It's a personal digital diary of your life.
+It's really great as a memory tool. That one time you went to the mountains or your trip out to the desert. You can see bright dots where your jobs were or the apartment your old friend lived at that you've forgotten to reach out to. It's a personal digital diary of your life.
 
 ## Step 1: Get your data
 On an Android phone go to settings and you're going to be downloading your location history locally, on to your phone as "Timeline.json"
