@@ -2,6 +2,7 @@
 
 create() {
   vips dzsave heatmap.png tiles --tile-size 256 --overlap 0 --layout google --suffix ".webp[Q=90]"
+  convert tiles/blank.png -negate tiles/blank.png
 }
 
 blur() {
@@ -15,7 +16,7 @@ blur() {
 }
 
 final() {
-  for z in {6..9}; do
+  for z in {6..11}; do
     echo $z
     for file in tiles/$z/*/*.webp; do
       convert "$file" -contrast-stretch 0 "$file"
