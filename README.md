@@ -22,7 +22,9 @@ SIZE = 50000
 DISTANCE = 15 
 ```
 - The size is in pixels, it will generate a square image, so in this instance 50,000x50,000
-- The distance is in lat/lng from the initial location
+- The distance is in lat/lng from the *initial location* in the file.
+
+That last one is a big caveat. Essentially the first location it sees becomes the centerpoint
 
 ## Step 4: Run the script with your Timeline.json there
 This will take a while and you might need a lot of memory (tens of GB depending on the size)
