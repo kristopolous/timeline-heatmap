@@ -1,4 +1,5 @@
 <img width="2635" height="1139" alt="heatmap" src="https://github.com/user-attachments/assets/334fa540-fd23-4243-8fe2-7f379b284f6d" />
+
 # Make a zoommable pannable heatmap of your location history
 
 ## Step 1: Get your data
