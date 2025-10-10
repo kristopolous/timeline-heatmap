@@ -12,9 +12,6 @@
       padding: 0;
       background: black;
     }
-    .leaflet-container {
-      background-color: black !important;
-    }
     .leaflet-tile-container {
       background-color: black;
     }
@@ -23,17 +20,13 @@
 <body>
   <div id="map"></div>
   <script>
-    const maxZoomLevel = 9;
-    
-    // Use standard CRS, centered at lat/lng 0,0
     const map = L.map('map', {
       center: [10, -100],
       zoom: 4,
       minZoom: 0,
-      maxZoom: maxZoomLevel
+      maxZoom: 9
     });
     
-    // Add your tiles - standard google tile scheme
     L.tileLayer('tiles/{z}/{y}/{x}.webp', {
       tileSize: 256,
       noWrap: false,

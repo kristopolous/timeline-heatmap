@@ -4,8 +4,8 @@ DISTANCE = 15
 import json
 import numpy as np
 import matplotlib.pyplot as plt
-from matplotlib.colors import LinearSegmentedColormap
 import logging
+from matplotlib.colors import LinearSegmentedColormap
 from PIL import Image
 import math
 import colorsys
@@ -33,7 +33,6 @@ def load_locations(file_path, max_degree_delta=DISTANCE):
                             first_location = (lat, lng)
                         if first_location is not None and abs(lat - first_location[0]) <= max_degree_delta and abs(lng - first_location[1]) <= max_degree_delta:
                             locations.append((lat, lng))
-                            #print(lat, lng)  # Print statement
                     except ValueError:
                         print(f"Skipping invalid point: {point['point']}")
             elif 'visit' in segment and 'placeLocation' in segment['visit']['topCandidate']:
@@ -44,7 +43,6 @@ def load_locations(file_path, max_degree_delta=DISTANCE):
                         first_location = (lat, lng)
                     if first_location is not None and abs(lat - first_location[0]) <= max_degree_delta and abs(lng - first_location[1]) <= max_degree_delta:
                         locations.append((lat, lng))
-                        #print(lat, lng)  # Print statement
                 except ValueError:
                     print(f"Skipping invalid visit: {segment['visit']['topCandidate']['placeLocation']['latLng']}")
             elif 'activity' in segment:
@@ -57,10 +55,8 @@ def load_locations(file_path, max_degree_delta=DISTANCE):
 
                     if first_location is not None and abs(lat_start - first_location[0]) <= max_degree_delta and abs(lng_start - first_location[1]) <= max_degree_delta:
                         locations.append((lat_start, lng_start))
-                        #print(lat_start, lng_start)  # Print statement
                     if first_location is not None and abs(lat_end - first_location[0]) <= max_degree_delta and abs(lng_end - first_location[1]) <= max_degree_delta:
                         locations.append((lat_end, lng_end))
-                        #print(lat_end, lng_end)  # Print statement
                     total_locations += 2  # Count both start and end locations
                 except (ValueError, KeyError, TypeError) as e:
                     print(f"Skipping invalid activity: {segment['activity']}")
@@ -132,13 +128,10 @@ def create_heatmap(locations, width=SIZE, height=SIZE, output_path="heatmap.png"
 
     # Convert to image
     img = Image.fromarray(heatmap, 'RGB')
-
     logging.info("Converted to image.")
 
     # Save the image
     img.save(output_path)
-    print(f"Heatmap saved to {output_path}")
-
     logging.info(f"Heatmap saved to {output_path}")
 
 if __name__ == "__main__":

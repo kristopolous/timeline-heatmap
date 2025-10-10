@@ -26,4 +26,3 @@ final() {
 create
 blur
 final
-
