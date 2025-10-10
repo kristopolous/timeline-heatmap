@@ -4,7 +4,7 @@
 
 This tool turns your Google Location History into an interactive heatmap you can explore in the browser.
 
-It's really great as a memory tool. That one time you went to the mountains or your trip out to the desert. You can see bright dots where your jobs were or a good friend used to live. It's a personal digital diary of your life.
+It's really great as a memory tool to rediscover that one time you went to the mountains or your trip out to the desert. You can see bright dots where your jobs were or a good friend used to live. It's a personal digital diary of your life.
 
 And you can get yours up and running in about 30 minutes.
 
