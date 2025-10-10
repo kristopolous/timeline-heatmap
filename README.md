@@ -67,3 +67,5 @@ And you should be ready to go without any additional futzing around.
  - The heatmap_generator has a lot to be desired - it could be optimized, parallelized, yeah sure - I'll take PRs.
  - The lower zooms are intentionally dilated so that regions are easy to find.
  - Yes things *do* look stretched mostly because our maps are stretched. This can certainly look "more normal" by squishing it ... go ahead and send me a PR if you want to do the work.
+
+## Lastly if you want to share yours, add it to issue #1!
