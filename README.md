@@ -26,7 +26,7 @@ DISTANCE = 15
 
 That last one is a big caveat. Essentially the first location it sees becomes the centerpoint
 
-Also 15 is about from Vancouver to Tijuana.
+Also 15 is about from about Vancouver to Cabo San Lucas.
 
 ## Step 4: Run the script with your Timeline.json there
 This will take a while and you might need a lot of memory (tens of GB depending on the size)
