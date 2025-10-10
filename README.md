@@ -9,9 +9,9 @@ It's really great as a memory tool to rediscover that one time you went to the m
 And you can get yours up and running in about 30 minutes.
 
 ## Step 1: Get your data
-On an Android phone go to settings and you're going to be downloading your location history locally, on to your phone as "Timeline.json"
+You'll be downloading your location history to your Android phone as "Timeline.json". This may be possible on an iPhone as well and if you know how please submit a PR!
 
-Then you will transfer it to your computer. Here's a video
+Anyways, you will transfer the JSON to your computer in the next step. Here's a video
 
 https://github.com/user-attachments/assets/35fe220b-381b-4499-b7d9-01699557749b
 
