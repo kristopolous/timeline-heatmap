@@ -1,6 +1,8 @@
 <img width="2635" height="1139" alt="heatmap" src="https://github.com/user-attachments/assets/334fa540-fd23-4243-8fe2-7f379b284f6d" />
 
-# Make a zoommable pannable heatmap of your location history
+# Make a zoomable pannable heatmap of your location history
+
+This tool turns your Google Location History into an interactive heatmap you can explore in the browser.
 
 ## Step 1: Get your data
 On an Android phone go to settings and you're going to be downloading your location history locally, on to your phone as "Timeline.json"
