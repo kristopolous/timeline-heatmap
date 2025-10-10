@@ -3,14 +3,14 @@
 # Make a zoommable pannable heatmap of your location history
 
 ## Step 1: Get your data
-Go to your settings and you're going to be downloading your location history locally, on to your phone as "Timeline.json"
+On an Android phone go to settings and you're going to be downloading your location history locally, on to your phone as "Timeline.json"
 
-Then you will transfer it to your computer.
+Then you will transfer it to your computer. Here's a video
 
 https://github.com/user-attachments/assets/35fe220b-381b-4499-b7d9-01699557749b
 
 ## Step 2: Get it over to a computer
-Email it, adb, bluetooth, there's plenty of ways.
+Email it, adb, bluetooth, there's plenty of ways. Mine is about 10MB/year.
 
 ## Step 3: Tweak the heatmap_generator.py to your likings
 There's 2 constants at the top of the file
