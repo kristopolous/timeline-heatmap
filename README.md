@@ -53,7 +53,7 @@ $ ./vips.sh
 You may have to tweak it depending on how many zoom-levels you generate.
 
 ## Step 6: You're actually done
-Open up `index.html` and you'll get something like mine [over here](https://9ol.es/map). This serves completely statically, so you can just do something like
+Open up `index.html` and you'll get something like mine [over here](https://9ol.es/map) - Mine goes from mexicali to Las Vegas and all the way up to Seattle. It serves completely statically, so you can just do something like
 
 ```shell
 $ rsync -azv index.html tiles your-webserver:some-path/
