@@ -36,7 +36,6 @@ Also 15 is about from about Vancouver to Cabo San Lucas. it's a radius, not a di
 
 ## Step 4: Run the script with your Timeline.json there
 This will take a while and you might need a lot of memory (tens of GB depending on the size).
-The bottleneck is actually PIL's image.save. pyvips and pypng has some non-stupid ways of doing this.
 When you are done you should have a `heatmap.png`.
 
 ## Step 5: Install vips, imagemagick && run the tile maker
