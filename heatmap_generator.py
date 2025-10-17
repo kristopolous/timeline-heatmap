@@ -1,6 +1,7 @@
 SIZE = 250000
 DISTANCE = 10
 
+import sys
 import json
 import numpy as np
 import matplotlib.pyplot as plt
@@ -9,6 +10,7 @@ from matplotlib.colors import LinearSegmentedColormap
 from PIL import Image
 import math
 import colorsys
+import png
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -127,14 +129,30 @@ def create_heatmap(locations, width=SIZE, height=SIZE, output_path="heatmap.png"
         r, g, b = colorsys.hsv_to_rgb(hue / 360.0, 0.9, 0.9)
         heatmap[y, x] = (int(r * 255), int(g * 255), int(b * 255))
 
-    logging.info("Normalized pixel values.")
-
     # Convert to image
-    img = Image.fromarray(heatmap, 'RGB')
     logging.info("Converted to image.")
 
+    def row_generator():
+        unit = SIZE / 100
+        thresh = 0
+        n = 0
+        for row in range(SIZE):
+            if row > thresh:
+                if n % 10 == 0:
+                  sys.stderr.write("\n{:4d} ".format(n))
+                n+= 1
+                sys.stderr.write('.')
+                sys.stderr.flush()
+                thresh += unit
+
+            yield heatmap[row].flatten()
+
+    with open(output_path, 'wb') as f:
+        writer = png.Writer(SIZE, SIZE, greyscale=False)
+        writer.write(f, row_generator())
+    sys.stderr.write('\n')
+
     # Save the image
-    img.save(output_path)
     print(f"Heatmap saved to {output_path}")
 
     logging.info(f"Heatmap saved to {output_path}")
