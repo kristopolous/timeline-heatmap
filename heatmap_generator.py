@@ -1,5 +1,5 @@
-SIZE = 50000
-DISTANCE = 15 
+SIZE = 250000
+DISTANCE = 10
 
 import json
 import numpy as np
@@ -88,19 +88,25 @@ def create_heatmap(locations, width=SIZE, height=SIZE, output_path="heatmap.png"
         return
 
     # Project locations to Mercator coordinates
+    logging.info("Projecting points...")
     projected_locations = [mercator_projection(lat, lng) for lat, lng in locations]
 
+    logging.info("Making array...")
     # Get x and y values
     x_vals, y_vals = zip(*projected_locations)
     x_vals = np.array(x_vals)
     y_vals = np.array(y_vals)
 
+    logging.info("Getting some boundaries")
     # Define the boundaries
     min_x, max_x = x_vals.min(), x_vals.max()
     min_y, max_y = y_vals.min(), y_vals.max()
 
+    logging.info("Making the pixel array...")
     # Create the pixel array (initialized to black)
     heatmap = np.zeros((height, width, 3), dtype=np.uint8)
+
+    locationList = set()
 
     # Increment the pixel values
     for x, y in projected_locations:
@@ -109,20 +115,17 @@ def create_heatmap(locations, width=SIZE, height=SIZE, output_path="heatmap.png"
         
         # Calculate hue based on location density
         heatmap[y_pixel, x_pixel] += 1
+        locationList.add((y_pixel, x_pixel))
 
     logging.info("Incremented pixel values.")
-
-    # Normalize the pixel values (logarithmic normalization)
     max_value = np.max(heatmap)
-    normalized_heatmap = np.zeros_like(heatmap, dtype=np.float32)
-    for y in range(height):
-        for x in range(width):
-            if max_value > 0 and heatmap[y, x][0] > 0:
-                hue = min(360.0, math.log(1 + np.uint64(heatmap[y, x][0])) / math.log(1 + np.uint64(max_value)) * 360.0)
-                r, g, b = colorsys.hsv_to_rgb(hue / 360.0, 0.9, 0.9)
-                heatmap[y, x] = (int(r * 255), int(g * 255), int(b * 255))
-            else:
-                heatmap[y, x] = (0, 0, 0) # Black background
+    logging.info(f"Distinct number of values: {len(locationList)}")
+
+    for location in locationList:
+        y, x = location
+        hue = min(360.0, math.log(1 + np.uint64(heatmap[y, x][0])) / math.log(1 + np.uint64(max_value)) * 360.0)
+        r, g, b = colorsys.hsv_to_rgb(hue / 360.0, 0.9, 0.9)
+        heatmap[y, x] = (int(r * 255), int(g * 255), int(b * 255))
 
     logging.info("Normalized pixel values.")
 
@@ -132,6 +135,8 @@ def create_heatmap(locations, width=SIZE, height=SIZE, output_path="heatmap.png"
 
     # Save the image
     img.save(output_path)
+    print(f"Heatmap saved to {output_path}")
+
     logging.info(f"Heatmap saved to {output_path}")
 
 if __name__ == "__main__":
