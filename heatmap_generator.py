@@ -1,5 +1,6 @@
-SIZE = 250000
-DISTANCE = 10
+#!/usr/bin/env python3
+SIZE = 100000
+DISTANCE = 9
 
 import sys
 import json
@@ -11,6 +12,7 @@ from PIL import Image
 import math
 import colorsys
 import png
+import time
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -73,6 +75,14 @@ def load_locations(file_path, max_degree_delta=DISTANCE):
         logging.warning(f"Unhandled location types: {unhandled_location_types}")
     return locations, first_location
 
+# 1. Create the rainbow palette
+palette_size = 255
+palette = [(0,0,0)]
+for i in range(palette_size):
+    hue = float(i) / palette_size  # Hue varies from 0 to 1
+    r, g, b = colorsys.hsv_to_rgb(hue, 0.9, 0.9)  # S=0.5, V=0.5
+    palette.append((int(r * 255), int(g * 255), int(b * 255)))
+
 def mercator_projection(lat, lon):
     """Converts lat/lon to Mercator projection coordinates."""
     r_major = 6378137.0
@@ -106,9 +116,10 @@ def create_heatmap(locations, width=SIZE, height=SIZE, output_path="heatmap.png"
 
     logging.info("Making the pixel array...")
     # Create the pixel array (initialized to black)
-    heatmap = np.zeros((height, width, 3), dtype=np.uint8)
+    heatmap = np.zeros((height, width), dtype=np.uint8)
 
     locationList = set()
+
 
     # Increment the pixel values
     for x, y in projected_locations:
@@ -116,18 +127,34 @@ def create_heatmap(locations, width=SIZE, height=SIZE, output_path="heatmap.png"
         y_pixel = int((max_y - y) / (max_y - min_y) * (height - 1))  # Flip y-coordinate
         
         # Calculate hue based on location density
-        heatmap[y_pixel, x_pixel] += 1
+        if heatmap[y_pixel, x_pixel] < 250:
+            heatmap[y_pixel, x_pixel] += 1
         locationList.add((y_pixel, x_pixel))
 
     logging.info("Incremented pixel values.")
     max_value = np.max(heatmap)
+    print(max_value)
     logging.info(f"Distinct number of values: {len(locationList)}")
+
+    n = 0
+    ttl = len(locationList)
+    white = 255 #(255,255,255)
+    first = time.time()
+
+    print(f"heatmap.dtype: {heatmap.dtype}", file=sys.stderr)
+    print(f"heatmap.shape: {heatmap.shape}", file=sys.stderr)
+    print(f"heatmap.flags: {heatmap.flags}", file=sys.stderr)
 
     for location in locationList:
         y, x = location
-        hue = min(360.0, math.log(1 + np.uint64(heatmap[y, x][0])) / math.log(1 + np.uint64(max_value)) * 360.0)
-        r, g, b = colorsys.hsv_to_rgb(hue / 360.0, 0.9, 0.9)
-        heatmap[y, x] = (int(r * 255), int(g * 255), int(b * 255))
+        if n % 100 == 0:
+            if n % 2000 == 0:
+                  sys.stderr.write("\n{:4.4f} ".format(100 * n / ttl))
+            sys.stderr.write('.')
+            sys.stderr.flush()
+
+        n += 1
+        heatmap[y, x] = (254 * np.uint32(heatmap[y, x]) / max_value) + 1
 
     # Convert to image
     logging.info("Converted to image.")
@@ -148,11 +175,12 @@ def create_heatmap(locations, width=SIZE, height=SIZE, output_path="heatmap.png"
             yield heatmap[row].flatten()
 
     with open(output_path, 'wb') as f:
-        writer = png.Writer(SIZE, SIZE, greyscale=False)
+        writer = png.Writer(SIZE, SIZE, palette=palette, bitdepth=8, greyscale=False)
         writer.write(f, row_generator())
     sys.stderr.write('\n')
 
     # Save the image
+    #img.save(output_path)
     print(f"Heatmap saved to {output_path}")
 
     logging.info(f"Heatmap saved to {output_path}")
