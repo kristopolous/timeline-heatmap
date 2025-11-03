@@ -8,7 +8,7 @@ create() {
 blur() {
   for z in {0..5}; do
     echo $z
-    radius=$(( (6.0 - z) / 2))  # z=0 gets radius 5, z=4 gets radius 1
+    radius=$(( (6.0 - z) / 4))  # z=0 gets radius 5, z=4 gets radius 1
     for file in tiles/$z/*/*.webp; do
       convert "$file" -morphology Dilate Disk:$radius -contrast-stretch 0 "$file"
     done
@@ -23,6 +23,10 @@ final() {
     done
   done
 }
+
+echo "removing tiles ..."
+rm -r tiles
+echo "creating new ones ..."
 
 create
 blur
