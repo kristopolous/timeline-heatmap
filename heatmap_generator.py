@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-SIZE = 100000
+SIZE = 256*512
 DISTANCE = 9
 
 import sys
